@@ -1,0 +1,121 @@
+//-------------Lectura de los estados de las teclas------------
+	tecla_1 = !gpioRead(TEC1);
+	tecla_2 = !gpioRead(TEC2);
+	tecla_3 = !gpioRead(TEC3);
+	tecla_4 = !gpioRead(TEC4);
+	
+	//-------------Lectura de los estados de los leds------------
+	led_R= gpioRead(LEDR);
+	led_G= gpioRead(LEDG);
+	led_B= gpioRead(LEDB);
+	led_1= gpioRead(LED1);
+	led_2= gpioRead(LED2);
+	led_3= gpioRead(LED3);	
+	
+	//--------Lectura de la UART_USB----------------
+	if(uartReadByte(UART_USB, & byteRecibido)  ){
+	switch(byteRecibido){
+	case 'a':
+	gpioWrite( LEDB, !(led_B) );
+	break;
+	case 'v':
+	gpioWrite( LEDG, !(led_G) );
+	break;
+	case 'r':
+	gpioWrite( LEDR, !(led_R ) );
+	break;
+	case '1':
+	gpioWrite( LED1, !(led_1) );
+	break;
+	case '2':
+	gpioWrite( LED2, !(led_2) );
+	break;
+	case '3':
+	gpioWrite( LED3, !(led_3) );
+	break;
+	}
+	
+	}
+	//-----------Escritura de los estados de las teclas en la UART_USB-----
+	uartWriteString( UART_USB, "\r\nTEC1:");
+	if(tecla_1==1){
+	uartWriteString(UART_USB,"ON");
+	}else{
+	uartWriteString(UART_USB,"OFF");
+	}
+	
+	uartWriteString( UART_USB, "   TEC2:");
+	if(tecla_2==1){
+	uartWriteString(UART_USB,"ON");
+	}else{
+	uartWriteString(UART_USB,"OFF");
+	}
+	
+	uartWriteString( UART_USB, "   TEC3:");
+	if(tecla_3==1){
+	uartWriteString(UART_USB,"ON");
+	}else{
+	uartWriteString(UART_USB,"OFF");
+	}
+	
+	uartWriteString( UART_USB, "   TEC4:");
+	if(tecla_4==1){
+	uartWriteString(UART_USB,"ON \r\n");
+	}else{
+	uartWriteString(UART_USB,"OFF \r\n");
+	}
+	
+	//-----------Escritura de los estados de los LEDS en la UART_USB-----
+	uartWriteString(UART_USB, "LEDR:");
+	if(led_R==1){
+	uartWriteString(UART_USB,"ON");
+	} else{
+	uartWriteString(UART_USB,"OFF");
+	}
+	
+	uartWriteString(UART_USB, "   LEDG:");
+	if(led_G==1){
+	uartWriteString(UART_USB,"ON");
+	} else{
+	uartWriteString(UART_USB,"OFF");
+	}
+	
+           uartWriteString(UART_USB, "   LEDB:");
+	if(led_B==1){
+	uartWriteString(UART_USB,"ON \r\n");
+	} else{
+	uartWriteString(UART_USB,"OFF \r\n");
+	}
+	
+	uartWriteString(UART_USB, "LED1:");
+	if(led_1==1){
+	uartWriteString(UART_USB,"ON");
+	} else{
+	uartWriteString(UART_USB,"OFF");
+	}
+	
+	uartWriteString(UART_USB, "   LED2:");
+	if(led_2==1){
+	uartWriteString(UART_USB,"ON");
+	} else{
+	uartWriteString(UART_USB,"OFF");
+	}
+	
+	uartWriteString(UART_USB, "   LED3:");
+	if(led_3==1){
+	uartWriteString(UART_USB,"ON \r\n");
+	} else{
+	uartWriteString(UART_USB,"OFF \r\n");
+	}
+	
+	//---------Leo
+	//-----------Esperar un segundo-----------------------------------------
+	delay(1000);
+//==========================================================================  
+         
+   } 
+
+   // NO DEBE LLEGAR NUNCA AQUI, debido a que a este programa se ejecuta 
+   // directamenteno sobre un microcontroladore y no es llamado/ por ningun
+   // Sistema Operativo, como en el caso de un programa para PC.
+   return 0;
